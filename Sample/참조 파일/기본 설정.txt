@@ -13,22 +13,22 @@
 
 4. 참조 사이트
   Node                https://nodejs.org/ko/
-  VSCode             https://code.visualstudio.com/
+  VSCode              https://code.visualstudio.com/
 
-  JavaScript           https://developer.mozilla.org/ko/docs/Web/JavaScript
+  JavaScript          https://developer.mozilla.org/ko/docs/Web/JavaScript
   TypeScript          https://www.typescriptlang.org/ko/
 
-  Axios                 https://yamoo9.github.io/axios/
+  Axios               https://yamoo9.github.io/axios/
 
   NPM:                https://www.npmjs.com/
 
-  Vite:                 https://ko.vitejs.dev/guide/
-  Vue:                 https://ko.vuejs.org/
-  React:               https://ko.react.dev/
+  Vite:               https://ko.vitejs.dev/guide/
+  Vue:                https://ko.vuejs.org/
+  React:              https://ko.react.dev/
   
 
 5. Node 설치
-https://pxp13716.notion.site/Node-4162214eb09180358752faae0ebb23dc
+  https://pxp13716.notion.site/Node-4162214eb09180358752faae0ebb23dc
 
 6. VSCode 설치 및 세팅
-https://pxp13716.notion.site/VSCode-4162214eb09180ce9593f2fc98d02733?pvs=73
+  https://pxp13716.notion.site/VSCode-4162214eb09180ce9593f2fc98d02733?pvs=73
