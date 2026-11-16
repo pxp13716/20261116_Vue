@@ -70,10 +70,11 @@
     <p>
       count: {{ cnt }} / {{ count }} <br>
 
-      <button> CNT + </button>
-      <button> CNT - </button>
-      <button> COUNT + </button>
-      <button> COUNT - </button>
+      <button v-on:click="inCnt(2)"> CNT + </button>
+      <button @click="deCnt()"> CNT - </button>
+
+      <button v-on:click="inCount(3)"> COUNT + </button>
+      <button @click="deCount()"> COUNT - </button>
     </p>
 
     <ImgComp></ImgComp>
