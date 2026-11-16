@@ -6,9 +6,17 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "babel:dev": "babel src/arrow.js -d build"
   },
   "devDependencies": {
+    "@babel/cli": "^8.1.0",
+    "@babel/core": "^8.1.2",
+    "@babel/preset-env": "^8.0.7",
     "vite": "^8.3.6"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.9",
+    "jquery": "^4.0.0"
   }
 }

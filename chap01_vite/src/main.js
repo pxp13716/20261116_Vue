@@ -17,8 +17,11 @@ import * as one from './exportOne.js'
 import two, { x, y } from './exportTwo.js';
 
 // css import
-import './style.css'
+// import './style.css'
 
+// 외부 라이브러리 import
+import { $ } from 'jquery'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const name = 'Adam';
 
@@ -45,3 +48,7 @@ console.log(dom);
 
 // DOM에 출력
 document.getElementById('app').innerHTML = dom;
+
+// jQuery 이용
+$('#root').html(dom);
+
