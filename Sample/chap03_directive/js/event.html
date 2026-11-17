@@ -42,9 +42,7 @@
 
     // addEventListener
     // 실행 함수에 항상 딱 1개 event 객체의 참조값을 매개변수로 전달한다 - 필요없으면 기술 안해도 됨
-    document.getElementById('btn05').addEventListener('click', function (evt) {
-      alert('addEventListener')
-    });
+    document.getElementById('btn05').addEventListener('click', () => alert('addEventListener'));
 
     // addEventListener 방식은 실행할 이벤트 핸들러의 매개변수가 없거나 event 객체 1개만 존재하는 경우는
     // ()를 사용하지 않고 이름(값)으로 호출한다
@@ -65,16 +63,14 @@
       console.log(color);
       document.getElementById('btn08').style.backgroundColor = color;
     }
-    document.getElementById('btn08').addEventListener('click', function () {
-      btn08Event('red');
-    })
+
+    // 이벤트 이외의 매개변수가 있는 경우는 이벤트핸들러가 실행할 함수를 호출하는 방식으로 기술
+    document.getElementById('btn08').addEventListener('click', () => btn08Event('red'))
 
     const btn09Event = (evt, color) => {
       evt.target.style.backgroundColor = color;
     }
-    document.getElementById('btn09').addEventListener('click', function (evt) {
-      btn09Event(evt, 'red')
-    })
+    document.getElementById('btn09').addEventListener('click', (evt) => btn09Event(evt, 'red'))
   </script>
 </body>
 

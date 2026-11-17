@@ -9,6 +9,7 @@
   const incThree = (x) => num.value += x;
   const incFour = (evt) => {
     num.value += 4;
+    evt.target.style.backgroundColor = 'red';
   };
   const incFive = (x, color, evt) => {
     num.value += x;
@@ -27,9 +28,13 @@
   };
   
   const outer = (evt) => {
+    // evt.target => 이벤트가 발생한 객체
+    // evt.currentTarget => 어떤 객체의 이벤트 핸들러가 실행되었나
     console.log(evt.target, evt.currentTarget);
   };
   const one = (evt) => {
+    // 특정 조건
+    evt.stopPropagation();        // 상위 요소에 이벤트 전파 중지 (상위 요소 이벤트 실행 안됨)
     console.log(evt.target, evt.currentTarget);
   };
   const two = (evt) => {
@@ -37,7 +42,12 @@
   };
   
   const daum = (evt) => {
-    console.log('daum');
+    // 브라우저가 추가한 자바스크립트를 실행하지 않도록 처리
+    evt.preventDefault();
+
+    const confirm = window.confirm('정말로 이동하시겠습니까');
+    if(confirm) location.assign(evt.target.href);
+    else console.log('daum');
   };
   const naver = () => {
     console.log('naver');
@@ -52,11 +62,14 @@
     console.log(`Shift: ${evt.shiftKey}, Ctrl: ${evt.ctrlKey}, Alt: ${evt.altKey}, Meta: ${evt.metaKey}, `);
   
     // shift key가 눌러진 상태에서 home 키가 눌러졌다면..
+    if(code === 'Home' && evt.shiftKey) {
+      location.assign('http://google.com');
+    }
   
   };
   const keyEventTwo = () => location.assign('http://www.google.com');
   const escEvent = () => (name.value = '');
-  const enterEvent = () => alert('Good Morning!!!');
+  const enterEvent = (evt) => alert(evt.target.value);
   </script>
   
   <template>
@@ -67,43 +80,46 @@
         Num: {{num}}<br>
   
         <!-- inline event 방식 -->
-        <button>+1</button>
-        <button>+2</button>
-        <button>+3</button>
-        <button>+4</button>
-        <button>+5</button>
+        <button v-on:click="num++">+1</button>
+        <button v-on:click="incTwo()">+2</button>
+        <button v-on:click="incThree(3)">+3</button>
+        <button v-on:click="incFour($event)">+4</button>
+        <button v-on:click="incFive(5, 'green', $event)">+5</button>
         
         <!-- addEventListener 방식 => 매개변수가 없거나 event 객체 1개라면 () 없이 호출한다 -->
-        <button>-1</button>
-        <button>-2</button>
-        <button>-3</button>
-        <button>-4</button>
+        <button @click="decOne">-1</button>
+        <button @click="decTwo">-2</button>
+        <!-- <button @click="decTwo()">-2</button> 에러 발생이 제일 많음. $event를 전달 안함 -->
+        <button @click="() => decThree(3)">-3</button>
+        <button @click="(evt) => decFour(4, evt)">-4</button>
         
         <!-- .once => 이벤트 핸들러가 1번만 실행된다 -->
-        <button>once</button>
+        <button @click.once="incTwo()">once</button>
         <!-- shift, alt, ctrl, meta, left, middle, right -->
-        <button>Key</button>
+        <button @click.shift.ctrl="incTwo()">Key</button>
       </div>
       
-      <div id="container" class="mb-3">
-        <div id="inner">ONE</div>
+      <div id="container" class="mb-3" @click="outer($event)">
+        <div id="inner" @click="one($event)">ONE</div>
         <!-- @click.stop => evt.stopPropagation(); -->
-        <div id="inner">TWO</div>
+        <div id="inner" @click.stop="two($event)">TWO</div>
       </div>
     </div>
   
+    <!-- 일부 HTML 요소는 브라우저가 빌드시 자바스크립트를 포함해서 빌드한다 => a, form... -->
     <div class="mb-3">
-        <a href="http://www.daum.net">DAUM</a> | 
+        <a href="http://www.daum.net" @click="daum($event)">DAUM</a> | 
         <!-- @click.prevent => evt.preventDefault(); -->
-        <a href="http://www.naver.com">NAVER</a>
+        <a href="http://www.naver.com" @click.prevent="naver()">NAVER</a>
     </div>
     <br>
   
     <div class="mb-5">
-      JavaScript: <input type="text" class="form-control" /> <br />
-      Vue: <input type="text" class="form-control" /> <br />
-      esc: <input type="text" class="form-control" v-model="name" /> <br />
-      Enter: <input type="text" class="form-control" v-model="msg" /> <br />
+      JavaScript: <input type="text" class="form-control" @keyup="keyEventOne($event)" /> <br />
+      <!-- 지정한 키가 눌러진 경우만 해당 메서드를 실행한다. -->
+      Vue: <input type="text" class="form-control" @keydown.a.shift="keyEventTwo()" /> <br />
+      esc: <input type="text" class="form-control" v-model="name" @keydown.esc="escEvent()" /> <br />
+      Enter: <input type="text" class="form-control" v-model="msg" @keydown.enter="enterEvent($event)" /> <br />
     </div>
   </template>
   

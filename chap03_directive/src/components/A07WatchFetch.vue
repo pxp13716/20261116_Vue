@@ -1,29 +1,78 @@
 <script setup>
-// const baseURL = 'http://sample.bmaster.kro.kr/contacts_long/search/';
+import { onBeforeUnmount, onMounted, ref, watchEffect } from 'vue';
+
+// const baseURL = 'http://sample.bmaster.kro.kr';
 const baseURL = 'http://localhost:8000';
 
+const name = ref('');
+const contactList = ref([]);
+const loading = ref(false);
+const error = ref(null);
+
+const getContactList = (value) => {
+  // console.log(value);
+  loading.value = true;
+
+  fetch(`${baseURL}/contacts_long/search/${value}`)
+    .then((resp) => {
+      // console.log(resp);
+      return resp.json();       // JavaScript 객체로 변환. 다음 then이 받아 처리한다
+    })
+    .then((data) => {
+      // console.log(data);
+      contactList.value = data;
+    })
+    .catch((err) => {
+      console.error(err);
+      error.value = err;
+    })
+    .finally(() => {
+      // console.log('END');
+      loading.value = false;
+    })
+}
+
+// name 변수를 감시해서 값이 2 글자 이상이면 getContactList를 실행하도록 처리
+// watchEffect는 computed와 같이 내부에 사용된 상태변수가 변경될때 마다 자동 실행된다.
+const nameWatch = watchEffect(() => {
+  if(name.value.length >= 2) getContactList(name.value);
+}, {
+  // immediate: true,
+})
+
+// template이 완성된 시점에 실행되는 라이프사이클 메서드
+onMounted(() => {
+  // getContactList('ab');
+});
+onBeforeUnmount(() => {
+  nameWatch();
+})
 </script>
 
 <template>
   <h3>A07 Watch</h3>
 
-  <div class="mb-5">
-    <input type="text" class="form-control"><br>
+  <div class="mb-5" v-if="error">
+    <h1>Error: {{ error.message }}</h1>
+  </div>
+
+  <div class="mb-5" v-else>
+    <input type="text" class="form-control" minlength="2" v-model="name"><br>
     <table class="table">
       <thead>
         <tr><th>NO</th><th>NAME</th><th>TEL</th><th>ADDRESS</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr v-for="contact in contactList" :key="contact.no">
+          <td>{{ contact.no }}</td>
+          <td>{{ contact.name }}</td>
+          <td>{{ contact.tel }}</td>
+          <td>{{ contact.address }}</td>
         </tr>
       </tbody>
     </table>
 
-    <div>Loading....</div>
+    <div v-show="loading">Loading....</div>
   </div>  
 
   <div class="mb-5">

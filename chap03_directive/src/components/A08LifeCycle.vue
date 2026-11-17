@@ -21,20 +21,22 @@ fetch(baseURL + search)
 
 // 컴포넌트가 특정한 시점(화면표시, 화면에서 삭제 등)에 호출될 함수를 
 // 특정한 이름으로 정의해 놓음 => 시점이되면 자동으로 호출되서 실행됨. 이를 라이프사이클 메서드라고 한다
-// data, event 초기화(beforeCreate, created) => setUp이 담당
+// data, event 초기화(beforeCreate, created) => setup이 담당
 
 
-// + 버튼 배경색을 오렌지로 변경
+// + 버튼 배경색을 오렌지로 변경 => DOM 완성전 (버튼이 아직 안 만들어짐)
+// document.querySelector('button').style.backgroundColor = 'orange';
 
 
 // beforeMount => DOM 생성 전.
 onBeforeMount(() => {
   console.log('onBeforeMount');
+  getContactList('ad');
 });
 // mounted => DOM 생성 완료 후.
 onMounted(() => {
   console.log('onMounted');
-  getContactList('ad');
+  document.querySelector('button').style.backgroundColor = 'orange';
 });
 
 // beforeUpdate => 상태 변경 전

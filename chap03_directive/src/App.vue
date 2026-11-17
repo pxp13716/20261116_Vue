@@ -6,6 +6,9 @@
   import A05Computed from './components/A05Computed.vue';
   import A06Computed from './components/A06Computed.vue';
   import A07Watch from './components/A07Watch.vue';
+  import A07WatchFetch from './components/A07WatchFetch.vue';
+  import A08LifeCycle from './components/A08LifeCycle.vue';
+  import A09Event from './components/A09Event.vue';
 </script>
 
 <!-- 조각 View(Component)를 결합하는 작업만 한다 -->
@@ -13,6 +16,9 @@
   <div class="m-3">
     <h1>Chap03 Directive</h1>
 
+    <A09Event></A09Event>
+    <A08LifeCycle></A08LifeCycle>
+    <A07WatchFetch></A07WatchFetch>
     <A07Watch></A07Watch>
     <A06Computed></A06Computed>
     <A05Computed></A05Computed>

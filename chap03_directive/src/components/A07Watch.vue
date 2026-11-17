@@ -65,6 +65,7 @@
   // LifeCycle 함수 => 리 렌더링 직전
   onBeforeUnmount(() => {
     watchQuantity();      // 지정한 watch 함수를 메모리에서 삭제
+    watchPrice();
   })
   /*
   'pre' (기본값)
