@@ -12,7 +12,10 @@ import { ref } from 'vue';
     {id: 2, name: 'HangDan', age: 20},
   ]
   const mySet = new Set(['React', 'Vue', 'Angular', 'Vue', 'React']);
-  const myMap = new Map([ ['one', 10], ['two', 20] ]);
+  const myMap = new Map([ 
+    ['one', 10], 
+    ['two', 20] 
+  ]);
   
   const check = ref(true);
   const name = ref('one');
@@ -81,6 +84,7 @@ import { ref } from 'vue';
         <tbody>
           <!-- 
             v-for는 시작 태그에 반드시 key 속성을 할당해야 한다 (esLint가 활성화 된 경우만 에러로 표시됨)
+            key는 항상 유일한 값으로 지정해야 한다.
             for(let idx = 0; idx < students.length; idx++) {
               const item = students[idx]; 
           -->
@@ -112,14 +116,18 @@ import { ref } from 'vue';
           </tr>
         </thead>
         <tbody>
-          <!-- v-for와 v-if를 동시에 기술하면 v-if가 먼저 실행된다. 따라서 분리해야 한다 -->
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <!-- v-for와 v-if를 동시에 기술하면 v-if가 먼저 실행된다. 따라서 분리해야 한다.
+            template 요소는 build시 삭제된다 
+          -->
+          <template v-for="(item, idx) in students" v-bind:key="idx">
+            <tr v-if="item.kor >= 90">
+              <td>{{ idx }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.age }}</td>
+              <td>{{ item.kor }}</td>
+              <td>{{ item.eng }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -135,10 +143,11 @@ import { ref } from 'vue';
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+          <!-- in 대신 of를 사용해도 된다 -->
+          <tr v-for="item of items" :key="item.id">
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.age }}</td>
           </tr>
         </tbody>
       </table>
@@ -146,50 +155,50 @@ import { ref } from 'vue';
   
     <div class="mb-3">
       <!-- 객체 순환 - value, key, index 3개의 값을 받는다 -->
-      <div class="form-check">
+      <div class="form-check" v-for="(value, keyValue, idx) in students[0]" :key="keyValue">
         <input class="form-check-input" type="radio" name="object" id="sample1">
         <label class="form-check-label" for="sample1">
-          Default radio
+          {{ idx }} / {{ keyValue }} / {{ value }}
         </label>
       </div>
     </div>
   
     <div class="mb-3">
       <!-- Set 순환 - value, index 값을 받는다 -->
-      <div class="form-check">
+      <div class="form-check" v-for="(value, idx) in mySet" :key="value">
         <input class="form-check-input" type="radio" name="set" :id="`set${idx}`">
         <label class="form-check-label" :for="`set${idx}`">
-          Default radio
+          {{ idx }} / {{ value }}
         </label>
       </div>
     </div>
   
     <div class="mb-3">
       <!-- Map 순환 - value, index 값을 받는다 -->
-      <div class="form-check">
+      <div class="form-check" v-for="(value, idx) in myMap" :key="value[0]">
         <input class="form-check-input" type="radio" name="map" :id="`map${idx}`">
         <label class="form-check-label" :for="`map${idx}`">
-          Default radio
+          {{ idx }} / {{ value }} / {{ value[0] }} / {{ value[1] }}
         </label>
       </div>
     </div>
   
     <div class="mb-3">
       <!-- 일련 번호 - 값은 1부터 시작한다  - value, index 값을 받는다 -->
-      <div class="form-check">
+      <div class="form-check" v-for="(value, idx) in 5" :key="value">
         <input class="form-check-input" type="radio" name="range" :id="`range${idx}`">
         <label class="form-check-label" :for="`range${idx}`">
-          Default radio
+          {{ idx }} / {{ value }}
         </label>
       </div>
     </div>
   
     <div class="mb-3">
       <!-- 문자열 순환 - value, index 값을 받는다 -->
-      <div class="form-check">
+      <div class="form-check" v-for="(value, idx) in 'Hello'" :key="idx">
         <input class="form-check-input" type="radio" name="str" :id="`str${idx}`">
         <label class="form-check-label" :for="`str${idx}`">
-          Default radio
+          {{ idx }} / {{ value }}
         </label>
       </div>
     </div>

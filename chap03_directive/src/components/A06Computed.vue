@@ -1,4 +1,6 @@
 <script setup>
+import { computed, ref } from 'vue';
+
 const countries = [
   { no:1,  name : "미국", capital : "워싱턴DC", region:"america" },
   { no:2,  name : "프랑스", capital : "파리", region:"europe" },
@@ -18,6 +20,25 @@ const countries = [
   { no:16,  name : "서사모아", capital : "아피아", region:"oceania" }
 ];
 
+// 1. button을 클릭 => 값 변경 => 화면 갱신
+const countryName = ref('');
+
+// 입력한 나라 이름 추출
+const changeCountry = () => {
+  const elem = document.querySelector('input[name="search"]');
+  countryName.value = elem.value.trim();
+  // console.log(countryName);
+}
+
+// 2. 리렌더링이 될때마다 template에서 searchData() 호출 => 새로운 배열 생성 => 테이블 생성
+// 추출한 나라 이름이 포함된 요소를 반환한 새로운 배열 생성
+const searchData = computed(() => {
+  const data = countries.filter((item) => {
+    if(item.name.includes(countryName.value)) return true;
+    else return false;
+  })
+  return data;
+});
 </script>
 
 <template>
@@ -26,7 +47,7 @@ const countries = [
   <div class="input-group">
     <input type="text" name="search" class="form-control">
     <div class="input-group-append">
-      <button class="btn btn-primary">SEARCH</button>
+      <button class="btn btn-primary" @click="changeCountry()">SEARCH</button>
     </div>
   </div>
   <br>
@@ -38,7 +59,7 @@ const countries = [
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in countries" :key="item.no">
+      <tr v-for="item in searchData" :key="item.no">
         <td>{{ item.no }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.capital }}</td>
