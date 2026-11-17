@@ -6,29 +6,17 @@
     "editor.formatOnSave": true,
     "workbench.externalBrowser": "chrome",
     "workbench.browser.openLocalhostLinks": false,
-    "workbench.browser.searchEngine": "google",
-    "terminal.integrated.profiles.windows": {
-        "PowerShell": {
-            "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
-        },
-        "Command Prompt": {
-            "path": "C:\\WINDOWS\\System32\\cmd.exe",
-            "args": [],
-            "icon": "terminal-cmd"
-        },
-        "Git Bash": {
-            "source": "Git Bash",
-            "icon": "terminal-git-bash"
-        }
-    },
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Dracula Theme Soft",
+    "workbench.colorTheme": "Night Owl",
     "git.autofetch": true,
     "claudeCode.hideOnboarding": true,
     "editor.tabSize": 2,
     "redhat.telemetry.enabled": false,
-    "editor.fontSize": 18,
     "explorer.compactFolders": false,
+    "terminal.integrated.stickyScroll.enabled": false,
+    "editor.stickyScroll.enabled": false,
+    "editor.minimap.enabled": false,
+    "editor.fontSize": 18,
     "terminal.integrated.fontSize": 18
 }

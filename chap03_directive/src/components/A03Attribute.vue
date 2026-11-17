@@ -2,18 +2,21 @@
 import { ref } from 'vue';
 
 const name = ref('Adam');
+
+// form 요소의 속성값 정의 => 변경 없음
+const attrs = { type: 'text', class: 'form-control', value: 'Eve' };
 </script>
 
 <template>
   <h3>A03 Attribute Directive</h3>
 
   <div class="mb-3">
-    <h5>1. 속성 바인딩</h5>
-    <input type="text" class="form-control">
-    <input type="text" class="form-control">
-    <input type="text" class="form-control">
-    <input type="text" class="form-control">
-    <input type="text">
+    <h5>1. 속성 바인딩 / {{ name }}</h5>
+    <input type="text" class="form-control" value="{{ name }}">
+    <input type="text" class="form-control" v-bind:value="name">
+    <input type="text" class="form-control" :value="name">
+    <input type="text" v-bind:class="'form-control'" v-bind:value="name">
+    <input v-bind="attrs">
     
     <div>Hello World</div>
     <div>Hello World</div>

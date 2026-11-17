@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { isRef, ref } from 'vue';
 
 // 변수의 값이 변경되면 변경된 값을 기반으로 화면을 재 갱신하는 변수 => 상태변수
 // 이 상태변수는 값이 변경되면 즉각 변경된 값 기반으로 화면을 재 구성한다
@@ -26,6 +26,32 @@ const changeCheck = () => check.value = !check.value;
 const arr = ref([10, 11]);
 const user = ref({ name: '춘향', age: 20});
 
+// Array
+const addArray = () => {
+  const random = Math.ceil(Math.random() * 100) + 1;
+  /*
+  // 불변성 => Vue는 필요 없음
+  const newArr = [...arr.value];
+  newArr.push(random);
+  arr.value = newArr;
+  */
+  arr.value.push(random);
+}
+const changeArray = (idx, value) => arr.value[idx] = value;
+const deleteArray = (idx) => arr.value.splice(idx, 1);
+
+// 객체 => 2.X 에서는 불변성을 지켜야 제대로 작동
+const addUser = (key, value) => user.value[key] = value;
+const updateUser = (key, value) => user.value[key] = value;
+const deleteUser = (key) => delete user.value[key];
+
+// 상태에서 값을 추출하면 일반 변수다.
+// console.log(isRef(nickname));   // false
+// console.log(isRef(user));       // true
+
+// const userAdd = user.value.address;
+// console.log(userAdd);
+// console.log(isRef(userAdd));       // false
 </script>
 
 <template>
@@ -50,8 +76,11 @@ const user = ref({ name: '춘향', age: 20});
       Name: {{ name }}<br />
       Age: {{ age + 1 }}<br />
       Check: {{ check ? '동의' : '동의 안함' }}<br />
-      Array: <br />
-      User: <br />
+      <!-- vue에서는 값이 undefined, null은 화면에 아무것도 표시하지 않는다 
+        널리쉬 연산자 => ?? 의 앞의 값이  undefined, null면 ?? 값을 사용한다
+      -->
+      Array: {{ arr[0] }} / {{ arr[1] }} / {{ arr[2] ?? 0 }}<br />
+      User: {{ user.name }} / {{ user.age }} / {{ user.address ?? 'UNKNOWN' }}<br />
     </p>
   </div>
 
@@ -62,13 +91,13 @@ const user = ref({ name: '춘향', age: 20});
     <button @click="changeAge(20)">AGE</button>
     <button @click="changeCheck()">CHECK</button>
 
-    <button>ADD ARRAY</button>
-    <button>UPDATE ARRAY</button>
-    <button>DELETE ARRAY</button>
+    <button v-on:click="addArray()">ADD ARRAY</button>
+    <button @click="changeArray(1, 2000)">UPDATE ARRAY</button>
+    <button @click="deleteArray(1)">DELETE ARRAY</button>
 
-    <button>ADD USER</button>
-    <button>UPDATE USER</button>
-    <button>DELETE USER</button>
+    <button @click="addUser('address', 'Seoul')">ADD USER</button>
+    <button @click="updateUser('address', 'Busan')">UPDATE USER</button>
+    <button @click="deleteUser('address')">DELETE USER</button>
   </div>
 </template>
 

@@ -1,26 +1,44 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref, toRef, toRefs } from 'vue';
 
 const nickname = ref('Adam');
-const changeNickname = (str) => '';
+const changeNickname = (str) => nickname.value = str;
 
 // reactive는 값을 통째로 교체하지 않는다.
 // reactive도 상태변수. 관련있는 자료를 묶어서 사용하고자 하는 경우
 // templage => {{ state.name }} 형태로 사용
 // setup => value를 붙이지 않고 state.name = value 형태와 같이 기존 방법을 사용
+const state = reactive({
+  name: 'Eve',
+  age: 20,
+  check: true,
+  arr: [10, 11],
+  user: { name: '방자', age: 18 },
+  str: `<b>Good Morning!!</b>`,
+})
 
-const changeName = (str) => '';
-const changeAge = (num) => '';
-const changeCheck = () => '';
+const changeName = (str) => state.name = str;
+const changeAge = (num) => state.age = num;
+const changeCheck = () => state.check = !state.check;
 const addArray = () => {
   const random = Math.ceil(Math.random() * 100);
-  
+  state.arr.push(random);
 }
-const updateArray = (idx, value) => '';
-const deleteArray = (idx) => '';
-const addObject = (key, value) => '';
-const updateObject = (key, value) => '';
-const deleteObject = (key) => '';
+const updateArray = (idx, value) => state.arr[idx] = value;
+const deleteArray = (idx) => state.arr.splice(idx, 1);
+const addObject = (key, value) => state.user[key] = value;
+const updateObject = (key, value) => state.user[key] = value;
+const deleteObject = (key) => delete state.user[key];
+
+// reactive 요소의 일부를 ref로 변경
+const name = toRef(state, 'name');
+const { age, check, arr, user } = toRefs(state);
+
+// toRef 없이 값을 추출하면 상태가 깨진 일반 변수가 된다
+const one = state.name;
+
+// v-once 확인
+const changeStr = (str) => state.str = `<b><i>${str}</i></b>`
 </script>
 
 <template>
@@ -28,55 +46,63 @@ const deleteObject = (key) => '';
 
   <div class="mb-3">
     Nickname: {{ nickname }}<br />
-    Name: <br />
-    Age: <br />
-    Check: <br />
-    Array: <br />
-    Array: <br />
+    Name: {{ state.name }} / {{ name }} / {{ one }}<br />
+    Age: {{ state.age }} / {{ age }}<br />
+    Check: {{ state.check ? 'T' : 'F' }} / {{ check }} <br />
+    Array: {{ state.arr[0] }} / {{ state.arr[1] }} / {{ state.arr[2] ?? 0 }} <br />
+    Array: {{ arr[0] }} / {{ arr[1] }} / {{ arr[2] ?? 0 }} <br />
+    Array: {{ state.user.name }} / {{ state.user.age }} / {{ state.user.address ?? 'unknown' }} <br />
+    Array: {{ user.name }} / {{ user.age }} / {{ user.address ?? 'unknown' }} <br />
     User: <br />
   </div>
 
   <div class="mb-3">
-    <button @click="() => changeNickname('Good Evening')">NICKNAME</button>
-    <button @click="() => changeName('놀부')">NAME</button>
-    <button @click="() => changeAge(300)">AGE</button>
-    <button @click="changeCheck">CHECK</button>
+    <button @click="changeNickname('Good Evening')">NICKNAME</button>
+    <button @click="changeName('놀부')">NAME</button>
+    <button @click="changeAge(300)">AGE</button>
+    <button @click="changeCheck()">CHECK</button>
 
-    <button @click="addArray">ADD ARRAY</button>
-    <button @click="() => updateArray(1, 3000)">UPDATE ARRAY</button>
-    <button @click="() => deleteArray(1)">DELETE ARRAY</button>
+    <button @click="addArray()">ADD ARRAY</button>
+    <button @click="updateArray(1, 3000)">UPDATE ARRAY</button>
+    <button @click="deleteArray(1)">DELETE ARRAY</button>
 
-    <button @click="() => addObject('address', 'Seoul')">ADD USER</button>
-    <button @click="() => updateObject('address', 'Busan')">UPDATE USER</button>
-    <button @click="() => deleteObject('address')">DELETE USER</button>
+    <button @click="addObject('address', 'Seoul')">ADD USER</button>
+    <button @click="updateObject('address', 'Busan')">UPDATE USER</button>
+    <button @click="deleteObject('address')">DELETE USER</button>
   </div>
 
   <div class="mb-3">
     <h5>2. 바인딩 연산</h5>
-    일반적 연산: <br>
-    속성 참조: <br>
-    속성 참조 연산: <br>
-    비교 연산: <br>
-    비교 연산: <br>
-    삼항 연산: <br>
+    <!-- {{ => JavaScript 시작,  }} => JavaScript 종료. 내부에는 표현식만 기술 가능 -->
+    표현식: {{ 10 }} / {{ '10' }} / {{ true }} / {{ 'true' }} <br>
+    일반적 연산: {{ 10 + 20 }}<br>
+    속성 참조: {{ arr.length }}<br>
+    속성 참조 연산: {{ arr.length * 2 }}<br>
+    비교 연산: {{ arr[0] > 0 }} <br>
+    비교 연산: {{ arr[0] > 0 && arr[1] > 0 }} <br>
+    삼항 연산: {{ check ? 'T' : 'F' }}<br>
   </div>
 
+  <!-- 
+    v-로 시작하는 구문에서 " => JavaScript 시작, " => JavaScript 종료. 내부에는 표현식만 기술 가능 -->
   <div class="mb-3">
     <h5>3. 바인딩 관련 지시자</h5>
-    보간법: <br>
-    v-text: <span></span><br>
+    보간법: {{ state.str }}<br>
+    v-text: <span v-text="state.str"></span><br>
     <!-- v-html은 XSS 이슈 때문에 "신뢰된 문자열"에서만 사용 -->
-    v-html: <span></span><br>
+    v-html: <span v-html="state.str"></span><br>
   </div>
 
   <div class="mb-3">
-    v-pre: <span></span><br>
-    v-once: <span></span><br>
+    <!-- v-pre는 값 지정 없음. 태그 내부에 기술된 {{  }}를 문자열로 취급한다 -->
+    v-pre: <span v-pre>{{ str }}</span><br>
+    <!-- v-once는 값 지정 없음. {{  }} 내부의 값의 상태 변수가 변경되도 최초 바인딩 된 값을 유지 -->
+    v-once: <span v-once>{{ state.str }}</span><br>
   </div>
 
   <div class="mb-5">
-    <button>Change</button>
-    <button>Change</button>
+    <button v-on:click="changeStr('Hello World')">Change</button>
+    <button @click="changeStr('Good Night')">Change</button>
   </div>
 </template>
 
