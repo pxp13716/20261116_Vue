@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue';
+
   const students = [
     { name: 'HongGilDong', age: 20, kor: 100, eng: 80 },
     { name: 'NolBu', age: 50, kor: 90, eng: 90 },
@@ -12,6 +14,8 @@
   const mySet = new Set(['React', 'Vue', 'Angular', 'Vue', 'React']);
   const myMap = new Map([ ['one', 10], ['two', 20] ]);
   
+  const check = ref(true);
+  const name = ref('one');
   </script>
   
   <template>
@@ -19,38 +23,47 @@
   
     <div class="mb-3">
       <h5>1. v-show</h5>
-      <div class="box">
+      <div class="box" v-show="check">
         표시 / 숨김을 반복적으로 할 목적. DOM은 남아 있음(CSS)<br />
         v-show가 있는 엘리먼트는 항상 렌더링 되고 DOM에 남아있다는 점입니다.<br />
         v-show는 단순히 엘리먼트에 display CSS 속성을 토글합니다.
       </div>
-    </div>
-  
-    <div class="mb-3">
-      <div class="box">
+
+      <div class="box" v-if="check">
         <h5>2-1. v-if</h5>
         표시 / 숨김을 반복적으로 표시 할 목적(v-show와 동일)과 조건에 맞는 View만을 표시할 목적.<br />
         DOM에서 완전히 삭제된다 - CSS가 적용되어 있는 경우 디자인 깨짐에 주의<br />
   
         Vue에서는 v-if 디렉티브를 사용하여 조건부 블럭을 작성할 수 있습니다.
       </div>
-      <div class="box">
+    </div>
+  
+    <div class="mb-3">
+      <div class="box" v-if="name === 'one'">
+        <h5>2-1. v-if</h5>
+        표시 / 숨김을 반복적으로 표시 할 목적(v-show와 동일)과 조건에 맞는 View만을 표시할 목적.<br />
+        DOM에서 완전히 삭제된다 - CSS가 적용되어 있는 경우 디자인 깨짐에 주의<br />
+  
+        Vue에서는 v-if 디렉티브를 사용하여 조건부 블럭을 작성할 수 있습니다.
+      </div>
+      <!-- <br> 중간에 v-if 관련 속성이 없는 요소가 포함되면 에러 -->
+      <div class="box" v-else-if="name === 'two'">
         <h5>2-2. v-else-if</h5>
         v-else-if와 v-else 사이에 다른 태그가 끼어 있으면 에러 발생. 항상 근접 태그로 기술 할 필요가 있다<br />
         v-else-if는 이름에서 알 수 있듯, v-if에 대한 “else if 블록” 역할을 합니다.<br />
         또한 여러 개를 사용할 수 있습니다.
       </div>
-      <div class="box">
+      <div class="box" v-else>
         <h5>2-3. v-else</h5>
         v-else 디렉티브를 사용하여 v-if에 대한 “else 블록”을 나타낼 수 있습니다
       </div>
     </div>
   
     <div class="mb-5">
-      <button class="btn btn-outline-primary btn-sm" >Check</button>
-      <button class="btn btn-outline-primary btn-sm" >IF</button>
-      <button class="btn btn-outline-primary btn-sm" >Else IF</button>
-      <button class="btn btn-outline-primary btn-sm" >Else</button><br>
+      <button class="btn btn-outline-primary btn-sm" @click="check = !check">Check</button>
+      <button class="btn btn-outline-primary btn-sm" @click="name = 'one'">IF</button>
+      <button class="btn btn-outline-primary btn-sm" @click="name = 'two'">Else IF</button>
+      <button class="btn btn-outline-primary btn-sm" @click="name = 'three'">Else</button><br>
     </div>  
   
     <div class="mb-3">
@@ -66,13 +79,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <!-- 
+            v-for는 시작 태그에 반드시 key 속성을 할당해야 한다 (esLint가 활성화 된 경우만 에러로 표시됨)
+            for(let idx = 0; idx < students.length; idx++) {
+              const item = students[idx]; 
+          -->
+          <tr v-for="(item, idx) in students" v-bind:key="idx">
+            <td>{{ idx }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.age }}</td>
+            <td>{{ item.kor }}</td>
+            <td>{{ item.eng }}</td>
           </tr>
+          <!--
+            }
+          -->
         </tbody>
       </table>
     </div>
