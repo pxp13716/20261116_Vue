@@ -1,12 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const str = 'Good Morning!!!';
 const check = ref(true);
+
 const num = ref(0);
+const warnEvent = computed(() => {
+  if(num.value < 0 || num.value > 100) return { warning: true }
+  else return { warning: false }
+})
 
 const styleOne = { color: 'orange', fontSize: '24pt', fontWeight: 'bold' };
+const styleTwo = ref({ color: 'orange', fontSize: '24pt', fontWeight: 'bold' });
+const enterEvent = () => styleTwo.value.color = 'green';
+const leaveEvent = () => styleTwo.value.color = 'orange';
+
 const classOne = 'one two three';
+const classTwo = ref('one two three');
+const enterClassEvent = () => classTwo.value = 'two three';
+const leaveClassEvent = () => classTwo.value = 'one two three';
 </script>
 
 <template>
@@ -15,21 +27,21 @@ const classOne = 'one two three';
   <div class="mb-3">
     <h5>Style Binding</h5>
     <div style="color: orange; font-size: 24pt; font-weight: bold;">{{str}}</div>
-    <div>{{str}}</div>
-    <div>{{str}}</div>
-    <div>{{str}}</div>
+    <div :style="styleOne">{{str}}</div>
+    <div :style="{ color: 'orange', fontSize: '24pt', fontWeight: 'bold' }">{{str}}</div>
+    <div :style="styleTwo" @mouseenter="enterEvent()" @mouseleave="leaveEvent()">{{str}}</div>
   </div>
 
   <div class="mb-3">
     <h5>Class Binding</h5>
-    <div class="one">{{str}}</div>
-    <div class="one">{{str}}</div>
-    <div class="one">{{str}}</div>
-    <div class="one">{{str}}</div>
+    <div class="one two three">{{str}}</div>
+    <div class="one" v-bind:class="'two three'">{{str}}</div>
+    <div v-bind:class="classOne">{{str}}</div>
+    <div :class="classTwo" @mouseenter="enterClassEvent()" @mouseleave="leaveClassEvent()">{{str}}</div>
     <br />
 
-    <div class="one">{{str}}</div>
-    <div class="one">{{str}}</div>
+    <div :class="{one: false, two: check, three: true}">{{str}}</div>
+    <div :class="{ [classOne]: check }">{{str}}</div>
 
     <div>
       <input type="checkbox" class="form-check-input" id="check" v-model="check" />{{ ' ' }}
@@ -38,12 +50,13 @@ const classOne = 'one two three';
   </div>
 
   <div class="mb-5">
-    <input type="number" class="form-control" v-model="num" />
+    <input type="number" class="form-control" v-model="num" :class="warnEvent" />
   </div>
 </template>
 
 <!-- 
-style => 전역 클래스로 등록. 동일한 이름이 존재하면 덮어씀
+style => 전역 클래스로 등록. 동일한 이름이 존재하면 덮어씀 (import 기준)
+
 style scoped => 현재 컴포넌트만 적용 가능하도록 속성을 추가함(View 요소도 속성이 추가됨) 
 style module => 현재 컴포넌트만 적용. class 이름을 변경. 변경된 이름은 this.$style이 관리
 -->

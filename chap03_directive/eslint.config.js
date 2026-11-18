@@ -26,5 +26,12 @@ export default defineConfig([
 
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
+  {
+    // 프로젝트 전역 rule 설정
+    rules: {
+      'no-unused-vars': 'warn',
+    }
+  },
+
   skipFormatting,
 ])

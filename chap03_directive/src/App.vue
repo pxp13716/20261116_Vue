@@ -9,6 +9,10 @@
   import A07WatchFetch from './components/A07WatchFetch.vue';
   import A08LifeCycle from './components/A08LifeCycle.vue';
   import A09Event from './components/A09Event.vue';
+  import A10Model from './components/A10Model.vue';
+  import A11RefElem from './components/A11RefElem.vue';
+  import A12StyleClass from './components/A12StyleClass.vue';
+  import A13ClassModule from './components/A13ClassModule.vue';
 </script>
 
 <!-- 조각 View(Component)를 결합하는 작업만 한다 -->
@@ -16,6 +20,10 @@
   <div class="m-3">
     <h1>Chap03 Directive</h1>
 
+    <A13ClassModule></A13ClassModule>
+    <A12StyleClass></A12StyleClass>
+    <A11RefElem></A11RefElem>
+    <A10Model></A10Model>
     <A09Event></A09Event>
     <A08LifeCycle></A08LifeCycle>
     <A07WatchFetch></A07WatchFetch>

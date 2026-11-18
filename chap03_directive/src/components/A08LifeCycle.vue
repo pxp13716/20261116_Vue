@@ -26,7 +26,7 @@ fetch(baseURL + search)
 
 // + 버튼 배경색을 오렌지로 변경 => DOM 완성전 (버튼이 아직 안 만들어짐)
 // document.querySelector('button').style.backgroundColor = 'orange';
-
+const btnElem = ref(null);
 
 // beforeMount => DOM 생성 전.
 onBeforeMount(() => {
@@ -36,7 +36,8 @@ onBeforeMount(() => {
 // mounted => DOM 생성 완료 후.
 onMounted(() => {
   console.log('onMounted');
-  document.querySelector('button').style.backgroundColor = 'orange';
+  // document.querySelector('button').style.backgroundColor = 'orange';
+  (btnElem.value).style.backgroundColor = 'orange';
 });
 
 // beforeUpdate => 상태 변경 전
@@ -67,7 +68,7 @@ onUnmounted(() => {
   
   <div class="mb-3">
     Num: {{num}}<br>
-    <button v-on:click="increase()">+1</button>
+    <button v-on:click="increase()" ref="btnElem">+1</button>
     <button v-on:click="decrease()">-1</button>
   </div>
 
