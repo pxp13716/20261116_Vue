@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { computed, provide, reactive, readonly, ref } from 'vue';
 import A06Inject from './children/A06Inject.vue';
 
 const name = ref('NolBu');
@@ -12,6 +12,15 @@ const changeUser = () => {
   user.name = '놀부';
   user.age = 300;
 };
+
+// 제공자
+provide('useContext', {
+  // name: name.value,        // 상태에서 값을 꺼내 대입 => 상태가 깨짐
+  name: computed(() => name.value),
+  age: computed(() => age.value),
+  user: readonly(user),       // 읽기 전용으로 전송
+  changeName, changeAge, changeUser
+})
 </script>
 
 <template>

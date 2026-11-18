@@ -1,17 +1,22 @@
 <script setup>
+import { inject, useCssModule } from 'vue';
 
+  defineProps(['todo']);          // provide에 없는 직접 속성으로 전달한 데이터
+
+  const style = useCssModule();   // CSS Module
+  const { updateTodo, deleteTodo } = inject('useTodo');
 </script>
 
 <template>
   <tr>
-    <td></td>
+    <td>{{ todo.id }}</td>
     <td>
-      <span></span>
+      <span :class="{ [style.done]: todo.done }">{{ todo.text }}</span>
     </td>
     <td>
-      <button class="btn btn-primary">Complete</button>
+      <button class="btn btn-primary" @click="updateTodo(todo.id)">Complete</button>
     </td>
-    <td><button class="btn btn-danger">Delete</button></td>
+    <td><button class="btn btn-danger" @click="deleteTodo(todo.id)">Delete</button></td>
   </tr>
 </template>
 

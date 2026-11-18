@@ -1,11 +1,25 @@
 <script setup>
+  import { inject, ref } from 'vue';
 
+  // 요소 참조
+  const todoElem = ref(null);
+
+  const { addTodo } = inject('useTodo');
+  
+  const handleSubmit = () => {
+    const elem = todoElem.value;
+    if(elem.value.trim() !== '') {
+      addTodo(elem.value.trim());
+      elem.value = '';
+      elem.focus();
+    }
+  }
 </script>
 
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit($event)">
     <div class="input-group">
-      <input type="text" class="form-control"/>
+      <input type="text" class="form-control" ref="todoElem"/>
       <div class="input-group-append">
         <button type="submit" class="btn btn-primary mr-1">Submit</button>
       </div>

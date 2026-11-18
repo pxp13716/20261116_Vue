@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+  import A05TodoItem from './A05TodoItem.vue';
+
+  defineProps(['todoList', 'updateTodo', 'deleteTodo'])
+</script>
 
 <template>
   <table class="table">
@@ -11,19 +15,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td>
-          <span></span>
-        </td>
-        <td><button class="btn btn-primary">Complete</button></td>
-        <td><button class="btn btn-danger">Delete</button></td>
-      </tr>
+      <template v-for="todo in todoList" :key="todo.id">
+        <A05TodoItem :todo="todo" :updateTodo="updateTodo" :deleteTodo="deleteTodo" />
+      </template>
     </tbody>
   </table>
 </template>
 
-<style scoped>
+<style module>
 .done {
   text-decoration: line-through;
 }

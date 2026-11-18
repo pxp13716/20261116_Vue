@@ -8,14 +8,33 @@ const todoList = ref([
   { id: 2, text: '두 번째 할 일', done: false },
   { id: 3, text: '세 번째 할 일', done: false },
 ]);
+let cnt = 4;
+
+// 함수의 매개변수를 이용해서 하위 컴포넌트에서 필요한 값을 전달
+const updateTodo = (id) => {
+  const todo = todoList.value.find((todo) => todo.id === id); // 매칭 객체를 반환
+  todo.done = !todo.done;
+  // todoList.value[2].done = !todoList.value[2].done;
+}
+const deleteTodo = (id) => {
+  // todoList.value.splice(2, 1);
+  const idx = todoList.value.findIndex((todo) => todo.id === id); // 매칭 index를 반환
+  todoList.value.splice(idx, 1);
+}
+const addTodo = (text) => {
+  const todo = { id: cnt, text, done: false }
+  todoList.value.push(todo);
+
+  cnt++;
+}
 </script>
 
 <template>
   <h3>A05 TodoList</h3>
 
   <div class="mb-5">
-    <A05TodoForm></A05TodoForm>
-    <A05TodoTable></A05TodoTable>
+    <A05TodoForm :addTodo="addTodo"></A05TodoForm>
+    <A05TodoTable :todoList="todoList" :updateTodo="updateTodo" :deleteTodo="deleteTodo"></A05TodoTable>
   </div>
 </template>
 

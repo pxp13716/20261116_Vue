@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 import A07TodoForm from './children/A07TodoForm.vue'
 import A07TodoTable from './children/A07TodoTable.vue'
 
@@ -22,6 +22,12 @@ const deleteTodo = (id) => {
   const index = todoList.value.findIndex(todo => todo.id === id);
   todoList.value.splice(index, 1);
 }
+
+// deep가 정말 깊은 경우 사용하자. 단계가 작으면 속성으로 전달하는 것이 파악하기 용의하다.
+provide('useTodo', {
+  todoList: computed(() => todoList.value),
+  updateTodo, deleteTodo, addTodo,
+})
 </script>
 
 <template>

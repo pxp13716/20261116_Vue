@@ -1,5 +1,8 @@
 <script setup>
-  
+import { inject } from 'vue';
+import A07TodoItem from './A07TodoItem.vue';
+
+const { todoList } = inject('useTodo')
 </script>
 
 <template>
@@ -13,12 +16,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td><span></span></td>
-        <td><button class="btn btn-primary">Complete</button></td>
-        <td><button class="btn btn-danger">Delete</button></td>
-      </tr>
+      <template v-for="todo in todoList" :key="todo.id">
+        <A07TodoItem :todo="todo" />
+      </template>
     </tbody>
   </table>
 </template>

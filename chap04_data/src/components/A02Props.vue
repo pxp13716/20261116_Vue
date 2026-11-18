@@ -27,13 +27,15 @@ const changeAddress = (str) => (address.value = str);
         => EX] time 값이 전달되면 시간 출력, data 전달되면 날짜 출력
     -->
     <A02PropsOne type="time" name="Adam" v-bind:age="20" v-bind:checkOne="true" checkTwo
-      v-bind:add="address"></A02PropsOne>
-    <A02PropsOne type="date" name="방자" :age="18" :checkOne="false" checkTwo 
-      :add="address"></A02PropsOne>
+      v-bind:add="address" v-bind:arr="arr" :user="user" :onAdd="onAdd"
+      :changeAddress="changeAddress"></A02PropsOne>
+    <A02PropsOne type="date" :add="address"></A02PropsOne>
   </div>
 
   <div class="mb-3">
-    <A02PropsTwo></A02PropsTwo>
+    <A02PropsTwo type="time" name="Adam" v-bind:age="20" v-bind:checkOne="true" checkTwo
+      v-bind:add="address" v-bind:arr="arr" :user="user" :onAdd="onAdd"
+      :changeAddress="changeAddress"></A02PropsTwo>
   </div>
 
   <div class="mb-5">

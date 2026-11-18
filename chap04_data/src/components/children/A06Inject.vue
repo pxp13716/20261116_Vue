@@ -1,5 +1,11 @@
 <script setup>
+import { inject } from 'vue';
 
+  const useContext = inject('useContext');
+  // console.log(useContext);
+
+  // 디스트럭처링 
+  const { changeName, changeAge, changeUser } = inject('useContext');
 </script>
 
 <template>
@@ -7,13 +13,13 @@
   
   <div class="mb-5">
     <div class="mb-5">
-    Name: <br />
-    Age: <br />
-    User: <br />
+    Name: {{ useContext.name }}<br />
+    Age: {{ useContext.age }}<br />
+    User: {{ useContext.user.name }} / {{ useContext.user.age }}<br />
 
-    <button>Name</button>
-    <button>Age</button>
-    <button>User</button><br />
+    <button @click="changeName()">Name</button>
+    <button @click="changeAge()">Age</button>
+    <button @click="changeUser()">User</button><br />
   </div>
   </div>
 </template>

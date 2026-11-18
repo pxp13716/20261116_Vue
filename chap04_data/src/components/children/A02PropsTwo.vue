@@ -1,9 +1,12 @@
 <script setup>
 import { computed } from 'vue';
 
-const dateOrTime = computed(() => {
+// 속성의 값을 배열로 간단히 받아 처리
+const props = defineProps(['type', 'name', 'age', 'checkOne', 'checkTwo', 'add', 'arr', 'user', 'onAdd', 'changeAddress'])
+
+const today = computed(() => {
   const today = new Date();
-  switch(props.now) {
+  switch(props.type) {
     case 'date':
       return today.toLocaleDateString();
     case 'time':
@@ -19,18 +22,25 @@ const dateOrTime = computed(() => {
     <h5>A02 Props Two Component</h5>
 
     <div class="mb-5">
-      Now: <br />
-      Name: <br />
-      Age:  <br />
-      Address:  <br />
-      Array:  <br />
-      User: <br />
-      onAdd:  <br />
-      isChecked:  <br />
+      Now: {{ type }} => {{ today }}<br />
+      Name: {{ name ?? '값 없음' }}<br />
+      Age:  {{ age ?? 0 }}<br />
+      CheckOne: {{ checkOne ?? true }}  <br />
+      CheckTwo: {{ checkTwo ?? true }}  <br />
+      Address: {{ add ?? '서울' }} <br />
+      <!-- 
+        배열과 객체는 값이 없으면 undefind[0], undefind.name, undefind() 형태가 된다 => 모두 에러
+        객체는 앞의 값이 undefined, null을 체크하기 위해 옵셔널 체이닝 연산자 사용
+        변수명?.[], 변수명?.속성, 변수명?.() => ?. 앞이 undefined, null면 ?. 뒤를 평가하지 않고
+        undefined, null을 반환하고 종료 => undefined, null은 화면에 출력되지 않음
+      -->
+      Array: {{ arr?.[0] ?? 0 }} / {{ arr?.[1] ?? 0 }} / {{ arr?.[2] }} <br />
+      User: {{ user?.name ?? '값 없음' }} / {{ user?.age ?? 0 }} / {{ user?.address }} <br />
+      onAdd:  {{ onAdd?.(10, 20) ?? '함수 정의 안됨' }}<br />
     </div>
 
     <div class="mb-3">
-      <button class="btn btn-danger">ADDRESS</button>
+      <button class="btn btn-danger" @click="changeAddress?.('속초')">ADDRESS</button>
     </div>
   </div>
 </template>
