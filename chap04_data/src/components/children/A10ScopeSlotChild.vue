@@ -29,7 +29,7 @@ const changeKor = (num) => kor.value = num;
     <!-- slot props라 한다 -->
     <slot nickname="Adam" :kor="kor" :eng="eng" :user="user" :changeKor="changeKor"></slot>
 
-    <slot name="jumsu"></slot>
+    <slot name="jumsu"  nickname="Adam" :kor="kor" :eng="eng" :user="user" :changeKor="changeKor"></slot>
   </div>
 </template>
 

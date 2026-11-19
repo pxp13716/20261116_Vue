@@ -11,10 +11,20 @@ import A10ScopeSlotChild from './children/A10ScopeSlotChild.vue'
       <template v-slot:default="one">
         <div class="mb-3 mt-3">
           KOR: {{ one.kor }}<br>
-          ENG: <br>
-          USER: <br>
+          ENG: {{ one.eng }}<br>
+          USER: {{ one.user?.name }} / {{ one.user?.age }} <br>
 
-          <button>KOR</button>
+          <button @click="one.changeKor?.('Eve')">KOR</button>
+        </div>
+      </template>
+
+      <template #jumsu="one">
+        <div class="mb-3 mt-3">
+          KOR: {{ one.kor }}<br>
+          ENG: {{ one.eng }}<br>
+          USER: {{ one.user?.name }} / {{ one.user?.age }} <br>
+
+          <button @click="one.changeKor?.('Eve')">KOR</button>
         </div>
       </template>
       
