@@ -5,6 +5,10 @@ import A05WarnChild from './children/A05WarnChild.vue'
 <template>
   <h3>A05 WarnHandler</h3>
 
+  <!-- 
+    경고 관련은 모두 main에서만 잡는다.
+    빌드하면 빌드한 결과에서는 표시되지 않는다 
+  -->
   <A05WarnChild></A05WarnChild>
 </template>
 

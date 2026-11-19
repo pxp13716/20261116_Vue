@@ -4,13 +4,16 @@ import { shallowRef } from 'vue';
 import A01BannerHome from './children/A01BannerHome.vue'
 import A01BannerAbout from './children/A01BannerAbout.vue'
 import A01BannerNews from './children/A01BannerNews.vue'
+import { PortalTarget } from 'portal-vue';
 
 const current = shallowRef(A01BannerHome);
 const changeCurrent = (comp) => current.value = comp;
 </script>
 
 <template>
-  
+  <!-- popup이 표시될 위치 -->
+  <PortalTarget name="dist"></PortalTarget>
+
   <h3>A01 Dynamic Component</h3>
 
   <!-- 
