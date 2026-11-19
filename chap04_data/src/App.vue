@@ -6,12 +6,18 @@ import A04ContactList from './components/A04ContactList.vue'
 import A05TodoList from './components/A05TodoList.vue';
 import A06Provide from './components/A06Provide.vue';
 import A07TodoList from './components/A07TodoList.vue';
+import A08Slot from './components/A08Slot.vue';
+import A09SlotName from './components/A09SlotName.vue';
+import A10ScopeSlot from './components/A10ScopeSlot.vue';
 </script>
 
 <template>
   <div class="m-3">
     <h1>Chap04 Data</h1>
 
+    <A10ScopeSlot></A10ScopeSlot>
+    <A09SlotName></A09SlotName>
+    <A08Slot></A08Slot>
     <A07TodoList></A07TodoList>
     <A06Provide></A06Provide>
     <A05TodoList></A05TodoList>

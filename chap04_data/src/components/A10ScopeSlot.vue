@@ -6,7 +6,19 @@ import A10ScopeSlotChild from './children/A10ScopeSlotChild.vue'
   <h3>A10 Scoped Slot</h3>
 
   <div class="mb-5">
-    <A10ScopeSlotChild></A10ScopeSlotChild>
+    <A10ScopeSlotChild>
+      <!-- one은 하위 컴포넌트가 전달한 값을 받는 객체 변수명을 지정 -->
+      <template v-slot:default="one">
+        <div class="mb-3 mt-3">
+          KOR: {{ one.kor }}<br>
+          ENG: <br>
+          USER: <br>
+
+          <button>KOR</button>
+        </div>
+      </template>
+      
+    </A10ScopeSlotChild>
   </div>
 </template>
 

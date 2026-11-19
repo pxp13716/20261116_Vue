@@ -7,20 +7,21 @@
 
   <div class="row card-body mb-5">
     <div class="col-12 border">
-      
+      <slot name="top">TOP</slot>
     </div>
     <div class="col-4 border">
-      
+      <slot name="left">Left</slot>
     </div>
     <div class="col-8 border">
-      
+      <slot name="right">Right</slot>
     </div>
     <div class="col-12 border">
-      
+      <slot name="bottom">Bottom</slot>
     </div>
 
     <div class="col-12">
-      
+      <!-- <slot name="default">Default</slot> -->
+      <slot>Default</slot>
     </div>
   </div>
 </template>
