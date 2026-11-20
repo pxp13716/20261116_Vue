@@ -5,13 +5,15 @@ import { storeToRefs } from 'pinia';
 import Swal from 'sweetalert2'
 
 import { useContactStore } from '@/stores/contactStore'
-import { onMounted } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 
 const router = useRouter();
 const store = useContactStore();
 
-const { contact, loading, errMessage } = storeToRefs(store);
+const { contact, loading, errMessage, current } = storeToRefs(store);
 const props = defineProps(['no']);
+
+console.log(current)
 
 const updateContact = async () => {
   try {
@@ -37,7 +39,11 @@ const updateContact = async () => {
 
 // reload(F5)를 누르면 데이터 삭제되는 문제
 onMounted(() => {
-  // store.getContact(props.no);
+  store.getContact(current.value);
+})
+
+onBeforeMount(() => {
+  store.setCurrent(props.no)
 })
 </script>
 

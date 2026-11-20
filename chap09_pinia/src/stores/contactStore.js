@@ -7,6 +7,11 @@ export const useContactStore = defineStore('contactStore', () => {
   const contact = ref({ no: 1, name: '', tel: '', address: '', photo: '' });
   const loading = ref(false);
   const errMessage = ref('');
+  const current = ref(1);
+
+  const setCurrent = (no) => {
+    current.value = no;
+  }
 
   const getContactList = (no, size) => {
     loading.value = true;
@@ -108,7 +113,8 @@ export const useContactStore = defineStore('contactStore', () => {
   }
 
   return {
-    contact, contactList, loading, errMessage,
-    getContactList, getContact, addContact, updateContact, deleteContact, updatePhoto, changeContact, clearContact
+    contact, contactList, loading, errMessage, current,
+    getContactList, getContact, addContact, updateContact, deleteContact, updatePhoto,
+    changeContact, clearContact, setCurrent,
   };
 });

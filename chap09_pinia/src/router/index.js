@@ -13,7 +13,7 @@ const routes = [
   { path: '/list', name: 'list', component: GetContactList },
   { path: '/contact/:no', name: 'contact', component: GetContact, props: true },
   { path: '/add', name: 'add', component: AddContact },
-  { path: '/update/:no', name: 'update', component: UpdateContact },
+  { path: '/update/:no', name: 'update', component: UpdateContact, props: true },
   { path: '/photo/:no', name: 'photo', component: UpdatePhoto, props: true },
 ];
 
