@@ -8,7 +8,7 @@ const contacts = contactlist.contacts;
     <h3>A08 Child Router</h3>
 
     <div class="mb-3">
-      <RouterLink :to="{name: 'info'}">INFO</RouterLink> | 
+      <RouterLink :to="{name: 'info'}">INFO</RouterLink> |  
       <RouterLink to="/A08Child/way">WAY</RouterLink> | 
       <span v-for="contact in contacts" :key="contact.no">
         <RouterLink :to="{name: 'view', params: {no: contact.no}}">{{ contact.name }}</RouterLink> | 

@@ -1,6 +1,6 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 
 // const route = useRoute();       // 패스, 전달되는 값 등을 관리
 const router = useRouter();     // 이동에 관련된 함수
@@ -24,6 +24,19 @@ const goURL = (url) => {
     router.push({...url, replace: true});    // replace => catch에 저장 여부
   }
 };
+
+// 컴포넌트 별 가드 설정
+onBeforeRouteLeave((to, from) => {
+  console.log('----- 컴포넌트 네비게이션 => onBeforeRouteLeave -----')
+  const storage = window.localStorage;
+  return storage.getItem('tel') ? true : false
+})
+// useRoute의 params나 query의 값이 변경되는 경우 실행
+onBeforeRouteUpdate((to, from) => {
+  console.log('----- 컴포넌트 네비게이션 => onBeforeRouteUpdate -----')
+  const storage = window.localStorage;
+  return storage.getItem('tel') ? true : false
+})
 </script>
 
 <template>

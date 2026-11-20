@@ -1,6 +1,7 @@
 import axios from 'axios'
 import pMinDelay from 'p-min-delay'
 
+// 함수 설정 => create => default
 // 설정이 default와 다른 경우. (제일 많이 사용하는 방식)
 const apiClient = axios.create({
   // baseURL: 'http://localhost:8000',

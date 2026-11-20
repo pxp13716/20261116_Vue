@@ -28,7 +28,7 @@ const getContact = async () => {
 }
 
 const stopWatch = watch(
-  () => props.no,
+  () => props.sno,
   (newVal) => getContact(newVal),
   { immediate: true }
 )
