@@ -13,4 +13,3 @@ import TodoContainer from './components/TodoContainer.vue';
     </div>
   </div>
 </template>
-

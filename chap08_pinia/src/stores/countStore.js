@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 
 /*
 countStore => 내부적으로 사용하는 이름. 중복되지 않는 이름으로 정의
@@ -8,7 +8,7 @@ countStore => 내부적으로 사용하는 이름. 중복되지 않는 이름으
   함수의 기술 방식은 setup에 기술하는 것과 동일
 */
 const useCountStore = defineStore('countStore', () => {
-  const storeName = 'Count Store'       // 값이 변경되도 화면 갱신 안됨
+  const storeName = 'Count Store'; // 값이 변경되도 화면 갱신 안됨
   const contacts = [
     { no: 1001, name: '김유신', tel: '010-1212-3331', address: '경주' },
     { no: 1002, name: '장보고', tel: '010-1212-3332', address: '청해진' },
@@ -19,11 +19,11 @@ const useCountStore = defineStore('countStore', () => {
     { no: 1007, name: '이순신', tel: '010-1212-3337', address: '통제영' },
     { no: 1008, name: '김시민', tel: '010-1212-3338', address: '진주' },
     { no: 1009, name: '정약용', tel: '010-1212-3339', address: '남양주' },
-  ]
-  const count = ref(0)              // 상태
+  ];
+  const count = ref(0); // 상태
 
   // Action
-  const incAction = (num) => count.value += num;
+  const incAction = (num) => (count.value += num);
   const decAction = () => count.value--;
 
   // getter
@@ -31,6 +31,6 @@ const useCountStore = defineStore('countStore', () => {
   const getItem = computed(() => (no) => contacts[no]);
 
   // 컴포넌트에서 참조할 값을 반환
-  return { storeName, count, incAction, decAction, oneItem, getItem }
-})
+  return { storeName, count, incAction, decAction, oneItem, getItem };
+});
 export default useCountStore;

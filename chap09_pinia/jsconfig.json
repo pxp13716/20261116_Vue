@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components": ["./src/components/*"],
+      "@/views": ["./src/views/*"],
+      "@/stores": ["./src/stores/*"],
+      "@/api": ["./src/api/*"],
+      "@/assets": ["./src/assets/*"],
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

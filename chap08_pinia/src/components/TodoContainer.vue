@@ -14,4 +14,3 @@ const store = useCountStore();
     <TodoTable></TodoTable>
   </div>
 </template>
-
